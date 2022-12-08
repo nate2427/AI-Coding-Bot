@@ -1,4 +1,9 @@
 import openai
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 def create_ques_anws_str(usr_msgs, bot_msgs):
@@ -10,10 +15,10 @@ def create_ques_anws_str(usr_msgs, bot_msgs):
 def ask_ai_teacher_question(prompt, cur_question, usr_msgs, bot_msgs):
     ques_anws_str = create_ques_anws_str(usr_msgs, bot_msgs)
     response = openai.Completion.create(
-        model="text-davinci-002",
+        model="text-davinci-003",
         prompt= prompt + f"\n{ques_anws_str}\nstudent: {cur_question}\nteacher: ",
         temperature=0.7,
-        max_tokens=1563,
+        max_tokens=2000,
         top_p=1,
         frequency_penalty=0.72,
         presence_penalty=0
